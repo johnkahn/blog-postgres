@@ -4,7 +4,19 @@ class PostsController < ApplicationController
   # GET /posts or /posts.json
   def index
     @posts = Post.all
+    @reviewed_posts = Post.reviewed
+    @unreviewed_posts = Post.reviewed
+
+    #@numposts = @posts.count
+
+    @posts.count > 0 ? @nummessage=@posts.count : @nummessage=0
+
   end
+
+
+# Instead of
+#    @reviewed_posts = Post.where('last_reviewed_at <= ?', Time.now)
+#    @unreviewed_posts = Post.where('last_reviewed_at IS NULL OR last_reviewed_at > ?', Time.now)
 
   # GET /posts/1 or /posts/1.json
   def show
