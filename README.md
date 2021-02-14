@@ -11,20 +11,25 @@ yarn version:  1.22.5
 psql (13.1 (Ubuntu 13.1-1.pgdg20.04+1))
 
 * System dependencies
+
 PostgreSQL is backend db
 
 * Configuration
 
 * Database creation
+
 see Deployment instructions below
 
 * Database initialization
+
 see Deployment instructions below
 
 * How to run the test suite
+
 rake spec
 
 * Services (job queues, cache servers, search engines, etc.)
+
 none
 
 * Deployment instructions
@@ -41,6 +46,7 @@ sudo pg_ctlcluster 13 main start
 OR
 
 systemctl start postgresql
+
 systemctl enable postgresql
 
 3. Log in to the PostgreSQL shell
@@ -52,9 +58,11 @@ sudo -i -u postgres psql
 create role rails_user with createdb login password 'secretpassword';
 
 To verify the PostgreSQL list of users, use the following:
+
 \du
 
 5. After github repository has been cloned to your local environment:
+
 bundle install
 
 6. Prepare the Database
@@ -80,6 +88,7 @@ $ heroku git:remote -a <Name-of-heroku-app>
 Push your code to Heroku:
 
 $ git push heroku master   
+
 (make sure you have a local master branch)
 
 Migrate the database by running:
