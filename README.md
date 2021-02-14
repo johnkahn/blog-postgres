@@ -42,7 +42,6 @@ OR
 
 systemctl start postgresql
 systemctl enable postgresql
->>>>>>> dev
 
 3. Log in to the PostgreSQL shell
 
