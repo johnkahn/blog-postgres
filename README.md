@@ -32,6 +32,10 @@ rake spec
 
 none
 
+* CI-CD instructions
+
+created main.yml
+
 * Deployment instructions
 
 
