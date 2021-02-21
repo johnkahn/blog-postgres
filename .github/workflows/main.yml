@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - pauline-cicd
       
 jobs:
   build:
