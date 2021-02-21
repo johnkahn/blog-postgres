@@ -2,8 +2,6 @@ name: CI/CD
 on:
   push:
     branches:
-#      - master
-#      - pauline-cicd
       - dev
 
 jobs:
@@ -35,7 +33,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: 2.6.x
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+#          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
       - uses: borales/actions-yarn@v2.0.0
         with:
@@ -49,7 +47,15 @@ jobs:
 #          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: rails_user
           POSTGRES_PASSWORD: secretpassword
-          run: bundle exec rspec spec/features/checkpostroutestub.rb
+
+        run: |
+#          sudo apt-get -yqq install libpq-dev
+#          gem install bundler
+          bundle install --jobs 4 --retry 3
+#          bundle exec rake db:create
+          bundle exec rake db:migrate
+#          bundle exec rspec .
+          bundle exec rspec spec/features/checkpostroutestub.rb
 
 #        run: |
 #          sudo apt-get -yqq install libpq-dev
