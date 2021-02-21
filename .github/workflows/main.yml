@@ -16,9 +16,10 @@ jobs:
         with:
           Default: ${{ github.repository }}
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "blog-postgres2"
-          heroku_email: "paulinewade@tamu.edu"
-       - name: "Add remote & Push to heroku"
+          heroku_app_name: blog-postgres2
+          heroku_email: paulinewade@tamu.edu
+          usedocker: true
+       - name: Add remote & Push to heroku
          shell: "bash"
          run: |
            heroku git:remote --app blog-postgres2
