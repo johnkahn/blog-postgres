@@ -3,18 +3,61 @@ name: Deploy
 on:
   push:
     branches:
-      - master
-      - pauline-cicd
+#      - master
+#      - pauline-cicd
       - dev
-      
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: akhileshns/heroku-deploy@v3.0.0
+#      - uses: akhileshns/heroku-deploy@v3.0.0
         with:
+          Default: ${{ github.repository }}
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "blog-postres"
+          heroku_app_name: "blog-postgres2"
           heroku_email: "paulinewade@tamu.edu"
-          usedocker: true
+
+      - name: "Add remote"
+        shell: "bash"
+        run: |
+           heroku git:remote --app blog-postgres2
+       - name: "Push to heroku"
+         shell: "bash"
+         run: |
+           git push heroku master
+           heroku run rake db:migrate
+           heroku run rake db:seed
+#          usedocker: true
+
+    # steps:
+    #   - name: "Checkout limistah:url-shortener"
+    #     uses: actions/checkout@v1
+    #     with:
+    #       # Repository name with owner. For example, actions/checkout
+    #       # Default: ${{ github.repository }}
+    #       repository: "limistah/url-shortener"
+    #       ref: "master"
+    #   - name: "Create .netrc for Heroku Auth"
+    #     shell: bash
+    #     run: |
+    #       `cat >~/.netrc <<EOF
+    #       machine api.heroku.com
+    #           login $EMAIL
+    #           password $HEROKU_AUTH_TOKEN
+    #       machine git.heroku.com
+    #           login $EMAIL
+    #           password $HEROKU_AUTH_TOKEN
+    #       EOF`
+    #     env:
+    #       EMAIL: aleemisiaka@gmail.com
+    #       HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_AUTH_TOKEN }}
+    #   - name: "Add remote"
+    #     shell: "bash"
+    #     run: |
+    #       heroku git:remote --app aleem-urls
+    #   - name: "Push to heroku"
+    #     shell: "bash"
+    #     run: |
+    #       git push heroku HEAD:master
