@@ -27,6 +27,9 @@ rake spec
 * Services (job queues, cache servers, search engines, etc.)
 none
 
+* CI-CD instructions
+created main.yml
+
 * Deployment instructions
 
 1. Install the PostgreSQL database server to the Ubuntu 20.04 using the apt command below.
