@@ -15,8 +15,6 @@ jobs:
         image: postgres:13
         ports: ["5432:5432"]
         env:
-#          POSTGRES_USER: postgres
-#          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: rails_user
           POSTGRES_PASSWORD: secretpassword
         # options: >-
@@ -51,10 +49,11 @@ jobs:
 #          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: rails_user
           POSTGRES_PASSWORD: secretpassword
-        run: |
+          run: bundle exec rspec .
+#        run: |
 #          sudo apt-get -yqq install libpq-dev
 #          gem install bundler
 #          bundle install --jobs 4 --retry 3
 #          bundle exec rake db:create
-#      bundle exec rake db:migrate
-          bundle exec rspec .
+#          bundle exec rake db:migrate
+#          bundle exec rspec .

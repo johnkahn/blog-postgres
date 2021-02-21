@@ -18,14 +18,10 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "blog-postgres2"
           heroku_email: "paulinewade@tamu.edu"
-
-      - name: "Add remote"
-        shell: "bash"
-        run: |
-           heroku git:remote --app blog-postgres2
-       - name: "Push to heroku"
+       - name: "Add remote & Push to heroku"
          shell: "bash"
          run: |
+           heroku git:remote --app blog-postgres2
            git push heroku master
            heroku run rake db:migrate
            heroku run rake db:seed
