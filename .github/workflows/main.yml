@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-#      - uses: akhileshns/heroku-deploy@v3.0.0
+      - uses: akhileshns/heroku-deploy@v3.0.0
         with:
           Default: ${{ github.repository }}
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
@@ -23,8 +23,8 @@ jobs:
          run: |
            heroku git:remote --app blog-postgres2
            git push heroku master
-           heroku run rake db:migrate
-           heroku run rake db:seed
+#           heroku run rake db:migrate
+#           heroku run rake db:seed
 #          usedocker: true
 
     # steps:

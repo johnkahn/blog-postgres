@@ -37,10 +37,10 @@ jobs:
           ruby-version: 2.6.x
           bundler-cache: true # runs 'bundle install' and caches installed gems automatically
 
-#      - uses: borales/actions-yarn@v2.0.0
-#        with:
-#          cmd: install
-      - name: Build and run test
+      - uses: borales/actions-yarn@v2.0.0
+        with:
+          cmd: install
+      - name: Run test
         env:
           DATABASE_URL: postgres://postgres:@localhost:5432/test
 #          REDIS_URL: redis://localhost:6379/0
@@ -49,7 +49,8 @@ jobs:
 #          POSTGRES_PASSWORD: postgres
           POSTGRES_USER: rails_user
           POSTGRES_PASSWORD: secretpassword
-          run: bundle exec rspec .
+          run: bundle exec rspec spec/features/checkpostroutestub.rb
+
 #        run: |
 #          sudo apt-get -yqq install libpq-dev
 #          gem install bundler
