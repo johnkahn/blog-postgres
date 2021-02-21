@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - pauline-cicd
+      - dev
       
 jobs:
   build:
