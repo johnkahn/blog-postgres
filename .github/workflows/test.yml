@@ -7,7 +7,7 @@ on:
     branches: [dev]
 
 env:
-  DATABASE_URL: postgresql://github:actions@localhost:5432/test
+  DATABASE_URL: postgresql://postgres:postgres@localhost:5432/test
   RUBY_VERSION: 2.6.x
 
 jobs:
@@ -15,16 +15,16 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
     env:
-      DATABASE_URL: postgres://github:actions@localhost:5432/test
+      DATABASE_URL: postgres://postgres:postgres@localhost:5432/test
       RAILS_ENV: test
-      POSTGRES_USER: github
-      POSTGRES_PASSWORD: actions
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     services:
       postgres:
         image: postgres
         env:
-          POSTGRES_USER: github
-          POSTGRES_PASSWORD: actions
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
           POSTGRES_DB: test
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
@@ -37,7 +37,10 @@ jobs:
         with:
           ruby-version: ${{ env.RUBY_VERSION }}
       - name: Install Dependencies
-        run: bundle install --jobs 4 --retry 3
+        run: |
+          sudo apt-get -yqq install libpq-dev
+          gem install bundler
+          bundle install --jobs 4 --retry 3
       - name: Migrate Database
         run: bundle exec rake db:migrate
       - name: Run Tests
