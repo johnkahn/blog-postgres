@@ -11,18 +11,21 @@ env:
   RUBY_VERSION: 2.6.x
 
 jobs:
-  cypress:
-    name: Cypress
+  run-tests:
+    name: Run Tests
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: postgres://github:actions@localhost:5432/test
       RAILS_ENV: test
       POSTGRES_USER: github
       POSTGRES_PASSWORD: actions
-      POSTGRES_DB: test
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES_USER: github
+          POSTGRES_PASSWORD: actions
+          POSTGRES_DB: test
         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
         ports:
           - 5432:5432
