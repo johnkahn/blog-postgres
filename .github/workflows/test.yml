@@ -1,0 +1,41 @@
+name: Tests
+
+on:
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [dev]
+
+env:
+  DATABASE_URL: postgresql://github:actions@localhost:5432/test
+  RUBY_VERSION: 2.6.x
+
+jobs:
+  cypress:
+    name: Cypress
+    runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: postgres://github:actions@localhost:5432/test
+      RAILS_ENV: test
+      POSTGRES_USER: github
+      POSTGRES_PASSWORD: actions
+      POSTGRES_DB: test
+    services:
+      postgres:
+        image: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Ruby
+        uses: actions/setup-ruby@v1
+        with:
+          ruby-version: ${{ env.RUBY_VERSION }}
+      - name: Install Dependencies
+        run: bundle install --jobs 4 --retry 3
+      - name: Migrate Database
+        run: bundle exec rake db:migrate
+      - name: Run Tests
+        run: bundle exec rspec .
